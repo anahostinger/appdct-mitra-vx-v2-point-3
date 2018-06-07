@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dapur Ceu Tari Apps</title>
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=0"/>
+    <link href="assets/line-awesome/css/line-awesome.min.css" rel="stylesheet">
+    <link href="assets/theme.css" rel="stylesheet">
+    <link href="assets/style.css" rel="stylesheet">
+    <link href="assets/fonts/roboto/roboto.css" rel="stylesheet">
+    <style>
+        body {font-family: 'Roboto', Arial, Tahoma, sans-serif;overflow-x:hidden}
+        #sidebar{display:none;z-index:5;top:0px}
+        .sidebar-width{width:270px}
+        .nav-btn{width:53px;height:53px}
+        #navbar2{color:#dfdfdf!important}
+        #nav-sign{height:3px;position:relative;top:-0.5px}
+        #content-home{position:relative;width:300%;margin-top:107px;}
+        .content-off{visibility:hidden;max-height:1px;overflow-y:hidden}
+        #sub-content-app-flash, #sub-content-app, #sub-sub-content-app{display:none;height:100%;width:100%;background-color:#fff;position:fixed!important;
+        z-index:10;overflow:auto;top:0;left:0}.content-of-sub{margin-top:3px}.input{color:#215969 !important}
+        
+        /* sub-content-animator-1 */
+        .move-out{position:relative;animation:moveout 0.4s}@keyframes moveout{from{left:0} to{left:-90px}}
+        .sub-move-in{animation:sub-animate 0.4s}@keyframes sub-animate{from{left:220px} to{left:0}}
+        .move-in{position:relative;animation:movein 0.4s}@keyframes movein{from{left:-90px} to{left:0}}
+        .sub-move-out{animation:sub-animate-out 0.4s}@keyframes sub-animate-out{from{left:0} to{left:100%}}
+        
+        /* sub-content-animator-2 */
+        .sub-bottom{position:relative;animation:subbottom 0.2s}@keyframes subbottom{from{top:120px;opacity:0} to{top:0;opacity:1}}
+        .sub-bottom-off{position:relative;animation:subbottomoff 0.2s}@keyframes subbottomoff{from{top:0;opacity:1} to{top:120px;opacity:0}}
+        
+        /* flash-message */
+        #flash-message{display:none;padding-top:110px;position:fixed;left:0;top:0;width:100%;height:100%;overflow:auto}
+        #flash-message .flash-content{margin:auto;background-color:#ccc;position:relative;padding:0;outline:0;width:200px}
+        
+        /* dropdown-click-float */
+        .dropdown-click{cursor:auto}
+        .overlay-float-menu{position:fixed;display:none;width:100%;height:100%;top:0;left:0;z-index:2}
+        .dropdown-content{z-index:3}
+    </style>
+</head>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script> 
+<body class="white" style="overflow-x:hidden">
+    <div id="content-app">
+        <div class="center">
+            <div class="section padding-large" style="width:250px;margin:auto">
+                <div class="section"><img src="assets/logo.png" style="width:197px"></div>
+                <div class="section"><i class="la la-circle-o-notch la-spin text-theme-d3" style="font-size:25px"></i></div>
+                <div class="text-theme xlarge">Dapur Ceu Tari</div> 
+                <div class="margin-bottom text-theme">www.dapurceutari.com</div> 
+            </div>
+        </div>
+    </div>
+    <div id="sub-content-app" style="padding-top:55px"></div><div id="sub-content-app-flash"></div>
+</body>
+<script src="assets/jquery-1.9.1.min.js?x2p3"></script>
+<script src="assets/system.js?x2p3"></script>
+<script src="assets/apps-investor-180420.js?x2p3"></script>
+<script src="assets/frame-investor-login-180420.js?x2p3"></script>
+<script> 
+var script = [];
+script["apps"] = false;
+script["login"] = false;
+function play(){ 
+    set_login(); 
+    alert("play triggerred");
+}
+script["login"] = true;
+function html_login(){
+alert("html login triggerred");
+return '<form class="content center"> '+
+'    <div class="margin-top" style="margin-bottom:-16px"><img src="assets/logo.png" style="width:197px"></div> '+
+'    <div class="container margin-bottom"> '+
+'        <div class="group-float gf-margin-32"> '+
+'            <input class="input-float input" type="text" required name="No HP"> '+
+'            <span class="highlight-float"></span> '+
+'            <span class="bar-float"></span> '+
+'            <label class="lb-float">No HP</label> '+
+'        </div> '+
+'        <div class="group-float gf-margin-32"> '+
+'            <input class="input-float input" type="password" required name="password"> '+
+'            <span class="highlight-float"></span> '+
+'            <span class="bar-float"></span> '+
+'            <label class="lb-float">Password</label> '+
+'        </div> '+
+'        <button class="btn block round theme rips"> <i class="la la-sign-in"></i> Login </button> '+
+'    </div> '+
+'    <div class="text-theme xlarge">Dapur Ceu Tari</div>  '+
+'    <div class="text-theme">www.dapurceutari.com</div>  '+
+'</form> '+
+'<script> '+
+'$("form").submit(function(e){ '+
+'    e.preventDefault(); '+
+'    var ths = $( this ), '+
+'        usr = ths.find("input").eq(0), '+
+'        psw = ths.find("input").eq(1), '+
+'        user_val = usr.val().trim(), '+
+'        pswd_val = psw.val(); '+
+'    if(!evalDirect(user_val, "No HP harus diisi", usr)) return false; '+
+'    if(!evalDirect(pswd_val, "Password harus diisi", psw)) return false; '+
+'    getX({ '+
+'            m: "investor-login", '+
+'            username: user_val, '+
+'            password: pswd_val '+
+'        }, '+
+'        function(res){ '+
+'            if(res.status == "success"){ '+
+'                alert("Anda berhasil login"); '+
+'                res = res.data; '+
+'                setLS("id_user", res.id); '+
+'                setLS("id_pengelola", res.id_pengelola); '+
+'                setLS("nama", res.nama); '+
+'                setLS("email", res.email); '+
+'                setLS("no_hp", res.no_hp); '+
+'                setLS("alamat", res.alamat); '+
+'                set_home(); '+
+'            }else{ '+
+'                alert("Username/Password tidak cocok"); '+
+'            } '+
+'        }); '+
+'}); '+
+'</script> ';
+}
+script["apps"] = true;
+function set_login(){ alert("set login triggerred");$("body").removeClass("light-gray").addClass("white"); $("#content-app").html(html_login());}
+function set_home(){}
+function set_logout(){}
+function set_profil(){}
+function set_reset_password(){}
+function set_tentang(){}
+var firstUrl = "https://apps.dapurceutari.com/",
+    url = firstUrl + "app/";
+	urlTarget = url + "apps.php",
+    script = [];
+
+$(document).ready(function(){
+	document.addEventListener("deviceready", TblBack_Clicked, false);
+    window.setTimeout(function(){
+        play();
+    }, 177);
+    alert("document ready triggerred");
+});
+
+function _getScript(name){
+    var d = document,
+        scr = d.createElement("script");
+    d = d.getElementsByTagName("html")[0];
+    scr.src = window.firstUrl + "app/" + name + "-180420.js?" + makeid();
+    d.appendChild(scr);
+}
+
+function makeid(){
+    var text = "", possible = "abcdefghijklmnopqrstuvwxyz";
+    for (var i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+}
+
+function getX(sendData, onSuccess, dtType = "json"){
+	$.ajax({
+		url: urlTarget,
+		traditional: true,
+		type: "post",
+		dataType: dtType,
+		data: sendData,
+        error: ajaxErr,
+		success: onSuccess
+	}); 
+}
+
+function getXForm(sendData, onSuccess, dtType = "json"){
+	$.ajax({
+		url: urlTarget,
+		method: "POST",
+		contentType: false,
+        cache: false,
+        processData: false,
+		data: sendData,
+		dataType: dtType,
+        error: ajaxErr,
+		success: onSuccess
+	}); 
+}
+
+function ajaxErr(jqXHR, exception){
+	if(jqXHR.status === 0){
+		tryAgain("Tidak ada koneksi\nUlangi percobaan setelah koneksi aktif");
+	}else if(jqXHR.status == 404){
+		tryAgain("Halaman server tidak ditemukan [404]\nHubungi developer apps"); 
+	}else if(jqXHR.status == 500){ 
+		tryAgain("Internal Server Error [500]\nHubungi developer apps"); 
+	}else if(exception == "parsererror"){ 
+		tryAgain("Data server tidak valid\nHubungi developer apps"); 
+	}else if(exception == "timeout"){ 
+		tryAgain("Koneksi terlalu lama\nSilahkan ulangi setelah tunggu beberapa menit"); 
+	}else if(exception == "abort"){ 
+		tryAgain("Koneksi ditolak\nHubungi developer apps"); 
+	}else{ 
+		tryAgain("Error :\n" + jqXHR.responseText); 
+	}
+}
+
+function evaluate(tag, msgError){
+	if(tag.value === undefined || tag.value === null || tag.value.trim() == ""){
+        alert(msgError);
+        tag.focus(); 
+		return 0; 
+	}
+	return 1;
+}
+
+function evalDirect(val, msgError, tag, isNumber){
+    if(isNumber)
+        var evaluasi = (val === undefined || val === null || val == "" || val == 0);
+    else
+        var evaluasi = (val === undefined || val === null || val == "");
+	if(evaluasi){ 
+        alert(msgError);
+        tag.focus();
+        return 0; 
+	}
+	return 1;
+}
+
+function evalDirectEmail(val, msgError, tag){
+	if(!validateEmail(val)){ 
+        alert(msgError);
+        tag.focus();
+        return 0; 
+	}
+	return 1;
+}
+
+function evalLength(tag, msgError, min){
+	if(!min) min = 6;
+	if(tag.value.length < min){ 
+		window.setTimeout(function(){ 
+			alert(msgError);
+			tag.focus(); 
+		} , 500); 
+		return 0; 
+	}
+	return 1;
+}
+
+function evalEmail(tag, msgError){
+	if(!validateEmail(tag.value.trim())){
+		window.setTimeout(function(){ 
+			alert(msgError);
+			tag.focus(); 
+		} ,500); 
+		return 0;
+	}
+	return 1;
+}
+
+function validateEmail( m ){ 
+	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
+	return re.test( m ); 
+}
+
+function getScript( urlScript, onSuccess ){
+	$.ajax({
+		url: urlScript,
+		dataType: "script",
+		error: ajaxErr,
+		success:onSuccess,
+		async: true
+	});
+}
+
+function activeSlideEvent(){	
+	(function(d){
+		var ce=function(e,n){ var a=document.createEvent("CustomEvent");a.initCustomEvent(n,true,true,e.target);
+			e.target.dispatchEvent(a);a=null;return false},
+		nm=true,sp={x:0,y:0},ep={x:0,y:0}, touch={ touchstart:function(e){sp={x:e.touches[0].pageX,y:e.touches[0].pageY}},
+		touchmove:function(e){nm=false;ep={x:e.touches[0].pageX,y:e.touches[0].pageY}},
+		touchend:function(e){if(nm){ce(e,"fc")}else{var x=ep.x-sp.x,xr=Math.abs(x),y=ep.y-sp.y,yr=Math.abs(y);
+		if(Math.max(xr,yr)>20){ce(e,(xr>yr?(x<0?"swl":"swr"):(y<0?"swu":"swd")))}};nm=true},
+		touchcancel:function(e){nm=false} }; for(var a in touch){d.addEventListener(a,touch[a],false);}})
+	(document);
+}
+
+Element.prototype.remove = function(){
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function(){
+    var i = this.length, ths, pThs;
+    while(i--){
+        ths = this[i]; 
+        pThs = ths.parentElement;
+        if(ths && pThs)
+            pThs.removeChild(ths);
+    }
+}
+
+function removeRippleSpan(){    
+    if(window.newCountDown){
+        window.setTimeout(function(){
+            window.newCountDown = false;
+            removeRippleSpan();
+        }, 390);
+    }else{
+        document.getElementsByClassName("ripple").remove();
+        document.getElementsByClassName("ripple-dark").remove();
+        window.removingRipple = false;
+    }
+}
+
+var removingRipple = false, newCountDown = false; addRippleEffect = function(e){
+    window.newCountDown = true;
+    var target = e.target, rClass = "ripple";
+    if(!target.classList.contains( "rips" )) target = target.parentElement;
+	if(target === null || !target.classList.contains("rips")){
+        rClass = "ripple-dark";
+        target = e.target;
+        if(!target.classList.contains("rips-dark"))target = target.parentElement;
+        if(target === null || !target.classList.contains("rips-dark"))return false;
+    }
+    var rect = target.getBoundingClientRect();
+    var ripple = target.querySelector("." + rClass);
+    if(!ripple){
+        ripple = document.createElement("span");
+        ripple.className = rClass;
+        ripple.style.height = ripple.style.width = Math.max(rect.width, rect.height) + "px";
+        target.appendChild(ripple);
+    }
+    ripple.classList.remove("show");
+    var top = e.pageY - rect.top - ripple.offsetHeight / 2 - document.body.scrollTop;
+    var left = e.pageX - rect.left - ripple.offsetWidth / 2 - document.body.scrollLeft;
+    ripple.style.top = top + "px";
+    ripple.style.left = left + "px";
+    ripple.classList.add("show");
+    if(!window.removingRipple){
+        window.newCountDown = false;
+        window.removingRipple = true;
+        window.setTimeout(removeRippleSpan, 490);
+    }
+    return false;
+}
+
+function setRippleEffect(){
+	setTimeout(function(){
+		document.addEventListener("click", addRippleEffect, false);
+	}, 50);
+}
+
+function TblBack_Clicked(){
+	document.addEventListener("backbutton", function(){
+        if(confirm("Yakin keluar aplikasi ?"))
+            navigator.app.exitApp();
+    }, false); 
+}
+
+function setLS(name, val){
+	if(typeof name === "string")
+		localStorage.setItem(name, val);
+	else{
+		
+	}
+}
+
+function getLS(name){
+	return localStorage.getItem(name);
+}
+
+function delLS(name){
+	localStorage.removeItem(name);
+}
+
+function hasLogin(){
+	return existLS("id_user");
+}
+
+function tryAgain(msg){ 
+	alert(msg); 
+}
+
+function existLS(name){
+	return (getLS(name) != undefined);
+}
+
+function evalImgType(tag, msgError){
+    var re = /\.(jpg|jpeg|png)$/i;
+    if(!re.exec(tag.value)){ 
+        alert( msgError );
+        tag.focus();
+        return 0; 
+	}
+	return 1;
+}
+
+function setDate(){
+    var date = new Date();
+    $( ".datepicker" ).datepicker({ 
+        changeMonth: true,
+        changeYear: true,
+        dayNames: getDayNames(),
+        monthNames: getMonthNames(),
+        dateFormat: "DD, d MM yy",
+        onSelect: function(){
+            var dateTime = new Date($(this).datepicker("getDate")),
+                strDateTime =  dateTime.getFullYear() + "-" + (dateTime.getMonth()+1) + "-" + dateTime.getDate();
+            var id = this.id.substr(1, this.id.length);
+            $("#"+id).val(strDateTime);
+        }
+    }).datepicker("setDate", date);
+    var strDateTime =  date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+    $(".date_val").val(strDateTime);
+}
+function getDayNames(no){
+    var dayNames = [ "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu" ];
+    if( no === undefined ) return dayNames; else return dayNames[no];
+}
+function getMonthNames(no){
+    var monthNames = [ "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" ];
+    if( no === undefined ) return monthNames; else return monthNames[no];
+}
+
+function simple_date(date){
+    date = date.split("-");
+    return date[2] + "/" + date[1] + "/" + date[0].substr(2, 2);
+}
+function inRp(d){
+    var min = "", a = ""; d = parseInt(d); if(isNaN(d)) return 0;
+    if(d < 0){ min = "-"; d = d * -1;}
+    d = d.toString().split("").reverse().join("");
+    for (var c = 0; c < d.length; c++) { if (c % 3 == 0) { a += d.substr(c, 3) + "." } }
+    return min + a.split("", a.length - 1).reverse().join("");
+}
+function inHp(d) {
+    var a = "";
+    for (var c = 0; c < d.length; c++) { if (c % 4 == 0) { a += d.substr(c, 4) + " " } }
+    return a;
+}
+function stringScript(text){
+	text = text.replace("'", "\\\'");
+	text = text.replace("\"", "\\x22");
+	return text;
+}
+</script>
+</html>
